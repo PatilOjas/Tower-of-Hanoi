@@ -129,9 +129,9 @@ class Hanoi:
             self.soln(rings - 1, tower_2, tower_1, tower_3)
             
 
-game=Hanoi(3)
+#game=Hanoi(3)
 # #print(game.tower_1.name,game.tower_1.stack,game.tower_2.name,game.tower_2.stack,game.tower_3.name,game.tower_3.stack)
-game.soln(game.rings, game.tower_1, game.tower_2, game.tower_3)
+#game.soln(game.rings, game.tower_1, game.tower_2, game.tower_3)
 # game.reset()
 # while(not game.won()):
 #     print(game.option())
