@@ -86,8 +86,8 @@ class Hanoi:
         if source.name in valid.keys() and destination.name in valid[source.name]:
             ring=source.pop()
             destination.push(ring)
-            print()
-            print(self.tower_1.name,self.tower_1.stack,self.tower_2.name,self.tower_2.stack,self.tower_3.name,self.tower_3.stack)
+            #print()
+            #print(self.tower_1.name,self.tower_1.stack,self.tower_2.name,self.tower_2.stack,self.tower_3.name,self.tower_3.stack)
             return source.name,destination.name,destination.size(),ring.number
 
 
@@ -115,25 +115,23 @@ class Hanoi:
     def soln(self,rings, tower_1, tower_2, tower_3) :		# 1 is main tower, 2 is auxillary tower, 3 is final tower
         if rings == 1 :
             print("Move disk 1 from" , tower_1.name, "to", tower_3.name)
-            rng=tower_1.pop()
-            tower_3.push(rng)
-            print()
-            print(tower_1.name,tower_1.stack,tower_2.name,tower_2.stack,tower_3.name,tower_3.stack)
+            a,b,c,d=self.move(int(tower_1.name[-1]),int(tower_3.name[-1]))
+            #print()
+            #print(tower_1.name,tower_1.stack,tower_2.name,tower_2.stack,tower_3.name,tower_3.stack)
         else :
             time.sleep(1)
             self.soln(rings - 1, tower_1, tower_3, tower_2)
-            rng=tower_1.pop()
-            tower_3.push(rng)
+            a,b,c,d=self.move(int(tower_1.name[-1]),int(tower_3.name[-1]))
             print("Move disk", rings, " from" , tower_1.name, "to", tower_3.name)
-            print(tower_1.name,tower_1.stack,tower_2.name,tower_2.stack,tower_3.name,tower_3.stack)
-            print()
+            #print(tower_1.name,tower_1.stack,tower_2.name,tower_2.stack,tower_3.name,tower_3.stack)
+            #print()
             time.sleep(1)
             self.soln(rings - 1, tower_2, tower_1, tower_3)
             
 
-# game=Hanoi(3)
+game=Hanoi(3)
 # #print(game.tower_1.name,game.tower_1.stack,game.tower_2.name,game.tower_2.stack,game.tower_3.name,game.tower_3.stack)
-# game.soln(game.rings, game.tower_1, game.tower_2, game.tower_3)
+game.soln(game.rings, game.tower_1, game.tower_2, game.tower_3)
 # game.reset()
 # while(not game.won()):
 #     print(game.option())
