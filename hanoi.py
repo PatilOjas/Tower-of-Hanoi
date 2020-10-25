@@ -1,4 +1,4 @@
-import time
+
 
 class Stack:
 
@@ -36,6 +36,7 @@ class Hanoi:
         self.tower_2=Stack("Tower 2")
         self.tower_3=Stack("Tower 3")
         self.rings=num_ring
+        self.rings_colour = {1:" Blue ring ", 2: " Red ring ", 3: " Orange ring ", 4: " Yellow ring ", 5: " Green ring "}
         for i in range(self.rings,0,-1):
             ring=Ring(i)
             self.tower_1.push(ring)
@@ -113,23 +114,22 @@ class Hanoi:
         
 
     def soln(self,rings, tower_1, tower_2, tower_3) :		# 1 is main tower, 2 is auxillary tower, 3 is final tower
-        if rings == 1 :
-            print("Move disk 1 from" , tower_1.name, "to", tower_3.name)
-            rng=tower_1.pop()
-            tower_3.push(rng)
-            print()
-            print(tower_1.name,tower_1.stack,tower_2.name,tower_2.stack,tower_3.name,tower_3.stack)
-        else :
-            time.sleep(1)
+        if rings == 1:
+            print("\t\tMove 1 from", tower_1.name, "to", tower_3.name)
+            steps = "\t\tMove "+self.rings_colour[rings]+" from " + tower_1.name + " to " + tower_3.name
+            self.move(int(tower_1.name[-1]), int(tower_3.name[-1]))
+            self.move(int(tower_1.name[-1]), int(tower_3.name[-1]))
+            return steps
+
+        else:
             self.soln(rings - 1, tower_1, tower_3, tower_2)
-            rng=tower_1.pop()
-            tower_3.push(rng)
-            print("Move disk", rings, " from" , tower_1.name, "to", tower_3.name)
-            print(tower_1.name,tower_1.stack,tower_2.name,tower_2.stack,tower_3.name,tower_3.stack)
-            print()
-            time.sleep(1)
-            self.soln(rings - 1, tower_2, tower_1, tower_3)
-            
+            steps = self.soln(rings - 1, tower_1, tower_3, tower_2) + "\n\n" + "\t\tMove " + self.rings_colour[rings] + " from " + tower_1.name + " to " + tower_3.name
+            self.move(int(tower_1.name[-1]), int(tower_3.name[-1]))
+            self.move(int(tower_1.name[-1]), int(tower_3.name[-1]))
+            print("\t\tMove ", self.rings_colour[rings], " from", tower_1.name, "to", tower_3.name)
+
+            return steps + "\n\n" + self.soln(rings - 1, tower_2, tower_1, tower_3)
+
 
 # game=Hanoi(3)
 # #print(game.tower_1.name,game.tower_1.stack,game.tower_2.name,game.tower_2.stack,game.tower_3.name,game.tower_3.stack)
@@ -147,3 +147,5 @@ class Hanoi:
 #             s,d,ds,r=game.move(a,b)
 #         except:
 #             print("Invalid Move")
+# game = Hanoi(3)
+# game.soln(3,)
