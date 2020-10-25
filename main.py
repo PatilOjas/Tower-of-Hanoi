@@ -11,6 +11,7 @@ move_counter = ""
 
 class Solution_window:
     def __init__(self):
+        global counter
         self.soln = Tk()
         self.soln.iconbitmap("Images\\tower_of_hanoi.ico")
         bold = font.Font(size=20)
@@ -23,8 +24,26 @@ class Solution_window:
             self.soln.destroy()                         # Closes solution window
             Start_window_class()                        # Opens start window
 
-        self.menu_button = Button(self.soln, text = "MENU", borderwidth = 0, bg = "blue", font = bold, command = close).place(x= 450, y= 500)
-        self.soln_screen = Label(self.soln, bg="white", height = 25, width = 100).place(x = 150, y =50)
+
+        h = Scrollbar(self.soln, orient = "horizontal")
+        h.pack(side = BOTTOM, fill =X)
+
+        v = Scrollbar(self.soln, orient = "vertical")
+        v.pack(side = RIGHT, fill = Y)
+        HanoE = hanoi.Hanoi(counter)
+
+        solution = HanoE.soln(rings=counter, tower_1=HanoE.tower_1, tower_2=HanoE.tower_2, tower_3=HanoE.tower_3)
+
+
+        text = Text(self.soln, width = 15, height = 32, wrap =None, yscrollcommand = v.set, xscrollcommand = h.set, font = bold)
+        text.insert(END, solution)
+
+        text.pack(side = TOP, fill = X)
+        h.config(command = text.xview)
+        v.config(command = text.yview)
+        self.menu_button = Button(self.soln, text = "MENU", borderwidth = 0, bg = "blue", font = bold, command = close).place(x= 870, y= 12)
+        # self.soln_screen = Label(self.soln, text =solution, bg="white", height = 18, width = 70, font = font.Font(size = 15), anchor = 'nw').place(x = 130, y =50)
+
 
         self.soln.mainloop()
 
@@ -49,7 +68,7 @@ class Main_window:
         self.ring_3 = PhotoImage(file="Images\\Orange.png")
         self.ring_4 = PhotoImage(file="Images\\Yellow.png")
 
-        # self.invalid_move = lambda: PlaySound('Sounds\\Wrong.wav', SND_FILENAME)
+
 
         self.display = Canvas(height=400, width=950)  # Canvas to post images
         self.display.pack()
